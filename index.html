@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>HWP 텍스트 변환기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        textarea, input {
+            margin: 10px;
+            padding: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+        }
+        .output-box {
+            width: 50%;
+            min-height: 100px;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>HWP 텍스트 변환기</h1>
+    <textarea id="inputText" placeholder="HWP에서 복사한 텍스트를 붙여넣으세요" rows="5" cols="50"></textarea><br>
+    <label>글꼴: <input type="text" id="fontName" placeholder="원하는 글꼴 입력 (예: HY견고딕)"></label><br>
+    <label>글자 크기 (pt): <input type="number" id="fontSize" value="17"></label><br>
+    <button onclick="convertText()">텍스트 변환</button><br>
+    <div id="outputText" contenteditable="true" class="output-box"></div><br>
+    <button onclick="copyToClipboard()">클립보드에 복사</button>
+    <script>
+        function convertText() {
+            const inputText = document.getElementById("inputText").value;
+            const fontName = document.getElementById("fontName").value || "맑은 고딕";
+            const fontSize = parseInt(document.getElementById("fontSize").value) || 17;
+            const outputText = document.getElementById("outputText");
+
+            if (!inputText) {
+                alert("텍스트를 입력해주세요!");
+                return;
+            }
+
+            const convertedText = `${inputText}\n\n[적용할 서식: 글꼴=${fontName}, 크기=${fontSize}pt]`;
+            outputText.textContent = convertedText;
+            outputText.style.fontFamily = fontName;
+            outputText.style.fontSize = `${fontSize}px`;
+        }
+
+        function copyToClipboard() {
+            const outputText = document.getElementById("outputText").textContent;
+            if (!outputText) {
+                alert("변환된 텍스트가 없습니다!");
+                return;
+            }
+
+            navigator.clipboard.writeText(outputText).then(() => {
+                const fontName = document.getElementById("fontName").value || "맑은 고딕";
+                const fontSize = document.getElementById("fontSize").value || 17;
+                alert(`클립보드에 복사되었습니다. PPT에 붙여넣고 "${fontName}", ${fontSize}pt로 설정하세요.`);
+            }).catch(err => {
+                console.error("클립보드 복사 실패:", err);
+            });
+        }
+    </script>
+</body>
+</html>
