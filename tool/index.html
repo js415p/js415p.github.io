@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>HWP 텍스트 변환기</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>HWP 텍스트 변환기</h1>
+    <textarea id="inputText" placeholder="HWP에서 복사한 텍스트를 붙여넣으세요" rows="5" cols="50"></textarea><br>
+    <label>글꼴: <input type="text" id="fontName" placeholder="원하는 글꼴 입력 (예: HY견고딕)"></label><br>
+    <label>글자 크기 (pt): <input type="number" id="fontSize" value="17"></label><br>
+    <button onclick="convertText()">텍스트 변환</button><br>
+    <div id="outputText" contenteditable="true" class="output-box"></div><br>
+    <button onclick="copyToClipboard()">클립보드에 복사</button>
+    <script src="script.js"></script>
+</body>
+</html>
