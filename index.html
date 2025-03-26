@@ -33,7 +33,7 @@
     <h1>HWP 텍스트 변환기</h1>
     <textarea id="inputText" placeholder="HWP에서 복사한 텍스트를 붙여넣으세요" rows="5" cols="50"></textarea><br>
     <label>글꼴: <input type="text" id="fontName" placeholder="원하는 글꼴 입력 (예: HY견고딕)"></label><br>
-    <label>글자 크기 (pt): <input type="number" id="fontSize" value="17"></label><br>
+    <label>글자 크기 (pt): <input type="number" id="fontSize" value="17" min="1"></label><br>
     <button onclick="convertText()">텍스트 변환</button><br>
     <div id="outputText" contenteditable="true" class="output-box"></div><br>
     <button onclick="copyToClipboard()">클립보드에 복사</button>
@@ -49,10 +49,13 @@
                 return;
             }
 
+            // 변환된 텍스트 생성
             const convertedText = `${inputText}\n\n[적용할 서식: 글꼴=${fontName}, 크기=${fontSize}pt]`;
             outputText.textContent = convertedText;
+
+            // 미리보기 스타일 적용 (pt를 px로 변환: 1pt ≈ 1.333px)
             outputText.style.fontFamily = fontName;
-            outputText.style.fontSize = `${fontSize}px`;
+            outputText.style.fontSize = `${fontSize * 1.333}px`; // pt를 px로 변환
         }
 
         function copyToClipboard() {
